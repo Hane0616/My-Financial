@@ -1,0 +1,13 @@
+# Visual Studio 設定與建置產物
+.vs/
+**/bin/
+**/obj/
+
+# 本機 SQLite 資料庫
+*.db
+*.db-shm
+*.db-wal
+
+# 個人設定
+*.user
+*.suo

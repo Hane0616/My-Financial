@@ -1,0 +1,65 @@
+﻿
+@model MyFinancial.Models.Transaction 
+
+@{
+    ViewData["Title"] = "新增收支"; // 設定頁面標題
+}
+
+<div class="container mt-4">
+    <h1>新增收支</h1>
+
+    <form asp-action="Create" method="post"> @* 將表單資料以 POST 傳給 Controller *@
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div> @* 顯示模型驗證錯誤 *@
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">交易名稱</label>
+            <input asp-for="Title" class="form-control" placeholder="例如：午餐、打工薪水" />
+            <span asp-validation-for="Title" class="text-danger"></span> @* 顯示名稱驗證錯誤 *@
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Amount" class="form-label">金額</label>
+            <input asp-for="Amount" type="number" min="0.01" step="0.01" class="form-control" />
+            <span asp-validation-for="Amount" class="text-danger"></span> @* 顯示金額驗證錯誤 *@
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Type" class="form-label">收支類型</label>
+            <select asp-for="Type" class="form-select">
+                <option value="Expense">支出</option>
+                <option value="Income">收入</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label">分類</label>
+            <select asp-for="Category" class="form-select">
+                <option value="">請選擇分類</option>
+                <option value="餐飲">餐飲</option>
+                <option value="交通">交通</option>
+                <option value="生活用品">生活用品</option>
+                <option value="學費">學費</option>
+                <option value="薪資">薪資</option>
+                <option value="其他">其他</option>
+            </select>
+            <span asp-validation-for="Category" class="text-danger"></span> @* 顯示分類驗證錯誤 *@
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Date" class="form-label">日期</label>
+            <input asp-for="Date" type="date" class="form-control" /> @* 輸入交易日期 *@
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Note" class="form-label">備註</label>
+            <textarea asp-for="Note" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">儲存紀錄</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">返回列表</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" /> @* 載入用戶端驗證腳本 *@
+}

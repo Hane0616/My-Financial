@@ -1,0 +1,39 @@
+﻿
+@model MyFinancial.Models.Transaction 
+
+@{
+    ViewData["Title"] = "刪除收支";
+}
+
+<div class="container mt-4">
+    <h1>刪除收支</h1>
+
+    <div class="alert alert-warning">
+        確定要刪除這筆紀錄嗎？刪除後無法復原。
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">交易名稱</dt>
+        <dd class="col-sm-9">@Model.Title</dd>
+
+        <dt class="col-sm-3">金額</dt>
+        <dd class="col-sm-9">@Model.Amount.ToString("N0")</dd>
+
+        <dt class="col-sm-3">收支類型</dt>
+        <dd class="col-sm-9">@(Model.Type == "Income" ? "收入" : "支出")</dd>
+
+        <dt class="col-sm-3">分類</dt>
+        <dd class="col-sm-9">@Model.Category</dd>
+
+        <dt class="col-sm-3">日期</dt>
+        <dd class="col-sm-9">@Model.Date.ToString("yyyy/MM/dd")</dd>
+
+        <dt class="col-sm-3">備註</dt>
+        <dd class="col-sm-9">@Model.Note</dd>
+    </dl>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post"> @* 確認後才送出刪除請求 *@
+        <button type="submit" class="btn btn-danger">確認刪除</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">取消</a>
+    </form>
+</div>

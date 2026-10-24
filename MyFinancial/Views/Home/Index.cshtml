@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "財務總覽"; // 設定瀏覽器與頁面的標題
+}
+
+<div class="container mt-4">
+    <div class="mb-4">
+        <h1>財務總覽</h1>
+        <p class="text-muted">@DateTime.Today.ToString("yyyy 年 MM 月") 的收支摘要</p>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">本月收入</h5>
+                    <h2 class="text-success">@(((decimal)ViewBag.MonthlyIncome).ToString("N0"))</h2>
+                    <p class="text-muted mb-0">本月所有收入紀錄</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">本月支出</h5>
+                    <h2 class="text-danger">@(((decimal)ViewBag.MonthlyExpense).ToString("N0"))</h2>
+                    <p class="text-muted mb-0">本月所有支出紀錄</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">本月結餘</h5>
+                    <h2 class="@(ViewBag.MonthlyBalance >= 0 ? "text-primary" : "text-danger")">
+                        @(((decimal)ViewBag.MonthlyBalance).ToString("N0"))
+                    </h2>
+                    <p class="text-muted mb-0">收入減去支出</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="row mt-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">本月支出分類</h4>
+
+                    @if (((IEnumerable<dynamic>)ViewBag.ExpenseByCategory).Any()) // 確認本月是否有支出資料
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>分類</th>
+                                        <th class="text-end">支出金額</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ViewBag.ExpenseByCategory) // 逐一顯示每個分類
+                                    {
+                                        <tr>
+                                            <td>@item.Category</td>
+                                            <td class="text-end">@(((decimal)item.Total).ToString("N0"))</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">本月尚無支出紀錄。</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="Transactions" asp-action="Index" class="btn btn-primary">查看收支紀錄</a>
+        <a asp-controller="Transactions" asp-action="Create" class="btn btn-outline-primary">新增收支</a>
+    </div>
+</div>
+
+</div>
